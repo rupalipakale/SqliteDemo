@@ -31,19 +31,29 @@
 
 - (IBAction)btnActionsave:(id)sender {
     if ( ![_txtName.text isEqualToString:@""] && ![_txtaddress.text isEqualToString:@""]) {
-        [[DBManager getInstance] insertDataIntoDB:[_txtid.text integerValue] withname:_txtName.text alongwithaddress:_txtaddress.text];
-        
-        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"Success" message:@"Record saved successfully" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action=[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
-            [self btnActionList:self];
-        }];
-        [self clearText];
-        [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
-        
+        if([[DBManager getInstance] insertDataIntoDB:_txtName.text alongwithaddress:_txtaddress.text])
+        {
+            [self clearText];
+            [self ShowAlertwithTitle:@"Success" andMessage:@"Record saved successfully"];
+        }
+        else
+        {
+            [self ShowAlertwithTitle:@"Error" andMessage:@"There is some error in saving records...Please try again"];
+        }
     }
+}
+
+-(void)ShowAlertwithTitle:(NSString *)title andMessage:(NSString *)msg
+{
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action=[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        [self btnActionList:self];
+    }];
+    
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (IBAction)btnActionList:(id)sender {

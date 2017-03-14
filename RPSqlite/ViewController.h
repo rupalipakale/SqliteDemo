@@ -12,7 +12,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *txtaddress;
 @property (strong, nonatomic) IBOutlet UITextField *txtName;
 
-@property (strong, nonatomic) IBOutlet UITextField *txtid;
+
 - (IBAction)btnActionsave:(id)sender;
 - (IBAction)btnActionList:(id)sender;
 

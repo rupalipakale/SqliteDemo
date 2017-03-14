@@ -19,11 +19,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"%@",[[DBManager getInstance] FetchFromDB]);
+   
+    [self fetchRecordsToshow];
+    [self addNotification];
+}
+-(void)fetchRecordsToshow
+{
     _studentList=[[DBManager getInstance] FetchFromDB];
     if(_studentList.count>0)
         [_tblStudentList reloadData];
 }
+
+-(void)addNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleUpdatedData:)
+                                                 name:@"DataUpdated"
+                                               object:nil];
+}
+
+-(void)handleUpdatedData:(NSNotification *)notification {
+        NSLog(@"recieved");
+        [self fetchRecordsToshow];
+    
+}
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

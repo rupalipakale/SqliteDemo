@@ -14,7 +14,7 @@
 +(DBManager *)getInstance;
 @property(nonatomic,strong)NSArray *array;
 -(void)createDB;
--(void)insertDataIntoDB:(NSInteger)stu_id withname:(NSString *)name alongwithaddress:(NSString *)address;
+-(BOOL)insertDataIntoDB:(NSString *)name alongwithaddress:(NSString *)address;
 -(NSArray *)FetchFromDB;
 -(BOOL)deleteWithId:(NSString *)studentID;
 -(BOOL)UpdateWithId:(NSString *)studentID andName:(NSString *)newName andAddress:(NSString *)newAddress;

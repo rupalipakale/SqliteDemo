@@ -45,18 +45,8 @@
     {
         if([[DBManager getInstance] UpdateWithId:[self.dictRecord valueForKey:@"id"] andName:_txtName.text andAddress:_txtAddress.text])
         {
-            /*id view = [self superview];
-            
-            while (view && [view isKindOfClass:[UITableView class]] == NO) {
-                view = [view superview];
-            }
-            
-            UITableView *tableView = (UITableView *)view;
-            [tableView reloadData];*/
-            NSIndexPath *indexPath = [[self relatedTable] indexPathForCell:self];
-            NSArray *indexPaths = [[NSArray alloc] initWithObjects:indexPath, nil];
-            
-            [[self relatedTable] reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"DataUpdated"
+                                                                object:self];
         _txtName.hidden=YES;
         _txtAddress.hidden=YES;
         _btnEdit.tag=0;

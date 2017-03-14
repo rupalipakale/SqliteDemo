@@ -43,7 +43,7 @@ static sqlite3_stmt *stm= nil;
     }
     
 }
--(void)insertDataIntoDB:(NSInteger)stu_id withname:(NSString *)name alongwithaddress:(NSString *)address{
+-(BOOL)insertDataIntoDB:(NSString *)name alongwithaddress:(NSString *)address{
     const char *db = [strDBPath UTF8String];
     if (sqlite3_open(db, &sqlite) == SQLITE_OK) {
         NSString *strInsert = [NSString stringWithFormat:@"insert or replace into student (name,address) values ('%@','%@')",name,address];
@@ -51,14 +51,19 @@ static sqlite3_stmt *stm= nil;
         if (sqlite3_prepare_v2(sqlite, insertquery, -1, &stm, NULL) == SQLITE_OK) {
             if (sqlite3_step(stm) == SQLITE_DONE) {
                 NSLog(@"done");
+                return YES;
             }else{
-              NSLog(@"not done");
+                NSLog(@"not done");
+                return NO;
+              
             }
            
             
         }
         sqlite3_close(sqlite);
     }
+    
+    return NO;
 }
 
 -(NSArray *)FetchFromDB{
